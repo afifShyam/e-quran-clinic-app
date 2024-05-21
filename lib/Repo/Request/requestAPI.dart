@@ -4,7 +4,8 @@ class requestAPI {
 
   // Authentication
   static String get loginURL => "${ipaddress}loginLearner";
+  static String get loginURLTutor => "${ipaddress}loginTutor";
   static String get refreshURL => "${ipaddress}refreshToken";
-
+  static String get refreshURLTutor => "${ipaddress}refreshTokenTutor";
 
 }

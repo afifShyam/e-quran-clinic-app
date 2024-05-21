@@ -1,5 +1,6 @@
+import 'package:e_quranclinic/View/mainview/splash_screen3.dart';
 import 'package:flutter/material.dart';
-import 'package:e_quranclinic/View/mainview/login.dart'; // Import Login.dart
+import 'package:e_quranclinic/View/authentication/login_learner.dart'; // Import Login.dart
 import 'dart:async';
 
 import 'package:google_fonts/google_fonts.dart';
@@ -21,7 +22,7 @@ class _SplashScreen2State extends State<SplashScreen2> {
       Timer(Duration(seconds: 2), () {
         // Navigate to Login
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => LoginScreen()),
+          MaterialPageRoute(builder: (context) => SplashScreen3()),
         );
         // Set flag to true after navigation
         setState(() {

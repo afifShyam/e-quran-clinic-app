@@ -7,16 +7,16 @@ import '/main.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class HomePage extends StatefulWidget {
+class HomePageTutor extends StatefulWidget {
 
 
-  HomePage();
+  HomePageTutor();
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomePageTutor> createState() => _HomePageTutorState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageTutorState extends State<HomePageTutor> {
   late String phone; // To store the retrieved phone number
   late String name;
   late int id;
@@ -30,12 +30,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(
+      appBar: CustomAppBar(
         height: 200, // Set your desired height here
         titleImage: 'assets/img/banner.png', // Set your image path here
         backgroundColor: Colors.teal[100]!, // Set the background color to Colors.teal[100]
 
-    ),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                        "   Upcoming Class",
+                    "Upcoming Class",
                     style: GoogleFonts.roboto(
                       fontWeight: FontWeight.bold,
                       textStyle: const TextStyle(fontSize: 22, color: Colors.black),

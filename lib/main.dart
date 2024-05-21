@@ -1,10 +1,11 @@
-import 'package:e_quranclinic/View/mainview/homepage.dart';
+import 'package:e_quranclinic/View/mainview/homepage_learner.dart';
 import 'package:flutter/material.dart';
-import 'View/mainview/login.dart';
+import 'View/authentication/login_learner.dart';
 import '/View/mainview/splash_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:ui';
 
+import 'View/mainview/splash_screen3.dart';
 import 'View/widget/custom_appbar.dart';
 
 void main() {
@@ -24,8 +25,8 @@ class MyApp extends StatelessWidget {
 
 
       ),
-
       home: SplashScreen(),
+      //home: SplashScreen(),
       //home: HomePage(phone: '', name: '', id: 0,),
 
     );

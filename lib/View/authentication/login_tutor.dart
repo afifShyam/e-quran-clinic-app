@@ -1,27 +1,29 @@
+import 'package:e_quranclinic/Repo/Authentication/login_tutor.dart';
+import 'package:e_quranclinic/View/mainview/homepage_tutor.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../../Controller/request_controller.dart';
-import '../../Repo/Authentication/loginLearner.dart';
+import '../../Repo/Authentication/login_learner.dart';
 import '../widget/custom_colour.dart';
-import 'homepage.dart';
+import '../mainview/homepage_learner.dart';
 
 void main() {
   runApp(const MaterialApp(
-    home: LoginScreen(),
+    home: LoginTutorScreen(),
   ));
 }
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class LoginTutorScreen extends StatefulWidget {
+  const LoginTutorScreen({Key? key}) : super(key: key);
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _LoginTutorScreenState createState() => _LoginTutorScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginTutorScreenState extends State<LoginTutorScreen> {
   bool _obscureText = true;
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -107,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: ElevatedButton(
                     onPressed: () async {
                       // Call the login function and await its result
-                      int result = await login(phoneController.text, passwordController.text);
+                      int result = await loginTutor(phoneController.text, passwordController.text);
                       // Handle the result if needed
                       // For example, you can check the result and show a toast message accordingly
                       if (result == 1) {
@@ -116,8 +118,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                            builder: (context) =>  HomePage(),
-                      ));
+                              builder: (context) =>  HomePageTutor(),
+                            ));
                       } else {
                         // Login failed
                         // Show an error message
@@ -136,19 +138,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      "Don't have an account yet? ",
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
               ],
             ),
           ),
