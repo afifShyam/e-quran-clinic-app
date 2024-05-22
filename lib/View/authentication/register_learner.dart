@@ -1,13 +1,15 @@
+import 'package:e_quranclinic/View/mainview/splash_screen3.dart';
+import 'package:e_quranclinic/View/widget/custom_colour.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:convert';
 
 import '../../Repo/Authentication/learner_repo.dart';
-import '/main.dart';
 import 'login_learner.dart';
-
 
 void main() {
   runApp(const MaterialApp(
@@ -23,7 +25,7 @@ class RegisterLearnerScreen extends StatefulWidget {
 }
 
 class _RegisterLearnerScreenState extends State<RegisterLearnerScreen> {
-  bool _obscureText= true;
+  bool _obscureText = true;
   bool _isPasswordEightCharacters = false;
   bool _havePasswordConstraints = false;
   bool _passwordTotalConstraints = false;
@@ -34,310 +36,338 @@ class _RegisterLearnerScreenState extends State<RegisterLearnerScreen> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-
-
-  onPasswordChanged(String password){
-
-    final numericRegex = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])'
-    r'(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+  onPasswordChanged(String password) {
+    final numericRegex =
+        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
     setState(() {
-      _isPasswordEightCharacters = false;
-      if(password.length >=8){
-        _isPasswordEightCharacters = true;
-      }
-
-      _havePasswordConstraints = false;
-      if(numericRegex.hasMatch(password)){
-        _havePasswordConstraints=true;
-      }
-
-      _passwordTotalConstraints = false;
-      if(_isPasswordEightCharacters == true &&
-          _havePasswordConstraints == true){
-
-        _passwordTotalConstraints = true;
-      }
+      _isPasswordEightCharacters = password.length >= 8;
+      _havePasswordConstraints = numericRegex.hasMatch(password);
+      _passwordTotalConstraints =
+          _isPasswordEightCharacters && _havePasswordConstraints;
     });
-
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-      body: SingleChildScrollView(
-        child:
-        Column(
+        body: SingleChildScrollView(
+            child: Container(
+      decoration: const BoxDecoration(color: Color(0xFFFFFFFF)),
+      padding: const EdgeInsets.fromLTRB(10, 60, 16, 100),
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: Column(
-                children: [
-                  Image.asset(
-                    'asset/logo.png',
-                    width: 280,
-                    height: 350,
-                  ),
-
-                ],
-              ),
-            ),
-
-
-            Padding( padding: const EdgeInsets.only( left: 15.0, bottom: 10.0),
-                child:
-                Column(
-                  children: [
-                    Row(
-                        children: <Widget> [
-                          Text("Let's Get Started",
-                            style: TextStyle(decoration: TextDecoration.none,
-                                fontSize: 25.0,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w700),),
-                        ]
-                    ),
-                    Row(
-                        children: <Widget> [
-                          Text("Create an account to get all features",
-                            style: TextStyle(decoration: TextDecoration.none,
-                                fontSize: 12.0,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w300),),
-                        ]
-                    ),
-                  ],
-                )
-
-            ),
-
             Container(
-                padding: EdgeInsets.all(20),
-                child: Column(  //column untuk letak icon and textfield
-                  children: [
-                    TextField(
-                      controller: nameController,
-                      decoration: InputDecoration(
-                        labelText: 'Name',
-                        prefixIcon: Icon(Icons.person),
-                        border: loginInputBorder(),
-                        enabledBorder: loginInputBorder(),
-                        focusedBorder: loginFocusedBorder(),
-                      ) , //keyboardType: TextInputType.phone,
-                    )
-                  ],
-                )
-            ),
-
-            Container(
-                padding: EdgeInsets.all(20),
-                child: Column(  //column untuk letak icon and textfield
-                  children: [
-                    TextField(
-                      controller: phoneController,
-                      decoration: InputDecoration(
-                        labelText: 'Phone Number',
-                        prefixIcon: Icon(Icons.phone),
-                        border: loginInputBorder(),
-                        enabledBorder: loginInputBorder(),
-                        focusedBorder: loginFocusedBorder(),
-                      ) ,
-                      keyboardType: TextInputType.phone,//keyboardType: TextInputType.phone,
-                    )
-                  ],
-                )
-            ),
-
-            Container(
-              padding: EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  TextField(
-                    onChanged: (password) => onPasswordChanged(password),
-                    controller: passwordController,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      prefixIcon: Icon(Icons.lock),
-                      suffixIcon: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _obscureText = !_obscureText;
-                          });
-                        },
-                        child: Icon(!_obscureText ? Icons.visibility : Icons.visibility_off),
-                      ),
-                      border: loginInputBorder(),
-                      enabledBorder: loginInputBorder(),
-                      focusedBorder: loginFocusedBorder(),
-                    ),
-                    obscureText: _obscureText,
-                  ),
-                  SizedBox(height: 1),
-                  Row(
-                    children: [
-                      AnimatedContainer(
-                        duration: Duration(milliseconds: 500),
-                        width: 20,
-                        height: 20,
-                        decoration: BoxDecoration(
-                          color: _isPasswordEightCharacters
-                              ? Colors.green
-                              : Colors.transparent,
-                          border: _isPasswordEightCharacters
-                              ? Border.all(color: Colors.transparent)
-                              : Border.all(color: Colors.grey.shade400),
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        child: Center(child: Icon(Icons.check, color: Colors.white, size: 15)),
-                      ),
-                      SizedBox(width: 10),
-                      Text("Contains at least 8 characters")
-                    ],
-                  ),
-                  SizedBox(height: 1),
-                  Row(
-                    children: [
-                      AnimatedContainer(
-                        duration: Duration(milliseconds: 500),
-                        width: 20,
-                        height: 20,
-                        decoration: BoxDecoration(
-                          color: _havePasswordConstraints
-                              ? Colors.green
-                              : Colors.transparent,
-                          border: _havePasswordConstraints
-                              ? Border.all(color: Colors.transparent)
-                              : Border.all(color: Colors.grey.shade400),
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        child: Center(child: Icon(Icons.check, color: Colors.white, size: 15)),
-                      ),
-                      SizedBox(width: 6),
-                      Text(" At least 1 uppercase & lowercase, 1 digit, 1 symbol")
-                    ],
-                  ),
-                  SizedBox(height: 10),  // Add space between the two rows
-                  // Add more Rows for other indicators if needed
-                ],
-              ),
-            ),
-
-            // SizedBox(height: 30),
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: MaterialButton(minWidth:double.infinity,
-            //       onPressed: (){
-            //     login();
-            //       },
-            //   child: Text('Login'),
-            //
-            //   color: Colors.teal,
-            //   textColor: Colors.white,),
-            //
-            // ),
-
-
-
-            SizedBox(
-              width:260,
-              height: 45,
-              child: ElevatedButton(
-                onPressed: () {
-                  registerLearner(nameController.text, genderController.text,
-                    int.parse(ageController.text), phoneController.text,
-                    passwordController.text, proficiencyLevelController.text);
-
-                },
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20), // Adjust the radius as needed
-                  ),
-                  backgroundColor: Color(hexColor('C73B3B')), // Set your preferred background color
-                ),
-                child: Text('Sign Up',
-                  style:TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w700,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-            ),
-
-
-            // SizedBox(),
-            // GestureDetector(
-            //     onTap:()
-            //     {
-            //       setState(() {
-            //         register();
-            //       });
-            //     },
-            //     child:Container(
-            //       alignment: Alignment.center,
-            //       width: 300,
-            //       height: 50,
-            //       decoration: BoxDecoration(
-            //         borderRadius: BorderRadius.circular(50),
-            //         color: Color(hexColor('C73B3B')),
-            //       ),
-            //       child: Text('Sign Up', style:
-            //       TextStyle(color: Colors.white,
-            //         fontFamily: 'Inter',
-            //         fontWeight: FontWeight.w700,
-            //         fontSize: 18,
-            //       ),),
-            //     )
-            // ),
-
-            SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(),
-                Text(
-                  "already Sign Up? ",
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-
-                GestureDetector(
+              margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: GestureDetector(
                   onTap: () {
-                    setState(() {
-                      Navigator.push(context, MaterialPageRoute(builder:
-                          (context) => LoginLearnerScreen(),)); //go to register screen
-                    });
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SplashScreen3()),
+                    );
                   },
-                  child: Text(
-                    'Login',
-                    style: TextStyle(
-                      color: Color(
-                        hexColor('#024362'),
-                      ),
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w700,
+                  child: Container(
+                    width: 30,
+                    height: 30,
+                    child: SvgPicture.asset(
+                      'assets/vectors/back_icon.svg',
                     ),
                   ),
                 ),
-              ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                  width: 200,
+                  height: 200,
+                  child: Image.asset(
+                    'assets/img/logo.png',
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Registration',
+                    style: GoogleFonts.getFont(
+                      'Rubik',
+                      fontWeight: FontWeight.w500,
+                      fontSize: 24,
+                      height: 1.3,
+                      letterSpacing: -0.5,
+                      color: const Color(0xFF3C3A36),
+                    ),
+                  ),
+                  Text(
+                    'Create your profile',
+                    style: GoogleFonts.getFont(
+                      'Rubik',
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14,
+                      height: 1.5,
+                      color: const Color(0xFF78746D),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.fromLTRB(0, 20, 0, 21),
+              decoration: BoxDecoration(
+                border: Border.all(color: const Color(0xFFBEBAB3)),
+                borderRadius: BorderRadius.circular(12),
+                color: const Color(0xFFFFFFFF),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: TextField(
+                  controller: nameController,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Name',
+                    hintStyle: GoogleFonts.getFont(
+                      'Rubik',
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14,
+                      height: 1.5,
+                      color: const Color(0xFF78746D),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.fromLTRB(0, 0, 0, 21),
+              decoration: BoxDecoration(
+                border: Border.all(color: const Color(0xFFBEBAB3)),
+                borderRadius: BorderRadius.circular(12),
+                color: const Color(0xFFFFFFFF),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: TextField(
+                  controller: genderController,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Gender',
+                    hintStyle: GoogleFonts.getFont(
+                      'Rubik',
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14,
+                      height: 1.5,
+                      color: const Color(0xFF78746D),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.fromLTRB(0, 0, 0, 21),
+              decoration: BoxDecoration(
+                border: Border.all(color: const Color(0xFFBEBAB3)),
+                borderRadius: BorderRadius.circular(12),
+                color: const Color(0xFFFFFFFF),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: TextField(
+                  controller: ageController,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Age',
+                    hintStyle: GoogleFonts.getFont(
+                      'Rubik',
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14,
+                      height: 1.5,
+                      color: const Color(0xFF78746D),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.fromLTRB(0, 0, 0, 21),
+              decoration: BoxDecoration(
+                border: Border.all(color: const Color(0xFFBEBAB3)),
+                borderRadius: BorderRadius.circular(12),
+                color: const Color(0xFFFFFFFF),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: TextField(
+                  controller: proficiencyLevelController,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Proficiency level',
+                    hintStyle: GoogleFonts.getFont(
+                      'Rubik',
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14,
+                      height: 1.5,
+                      color: const Color(0xFF78746D),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.fromLTRB(0, 0, 0, 21),
+              decoration: BoxDecoration(
+                border: Border.all(color: const Color(0xFFBEBAB3)),
+                borderRadius: BorderRadius.circular(12),
+                color: const Color(0xFFFFFFFF),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: TextField(
+                  controller: phoneController,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Phone Number',
+                    hintStyle: GoogleFonts.getFont(
+                      'Rubik',
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14,
+                      height: 1.5,
+                      color: const Color(0xFF78746D),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: const Color(0xFFBEBAB3)),
+                borderRadius: BorderRadius.circular(12),
+                color: const Color(0xFFFFFFFF),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: passwordController,
+                        obscureText: _obscureText,
+                        onChanged: onPasswordChanged,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Password',
+                          hintStyle: GoogleFonts.getFont(
+                            'Rubik',
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                            height: 1.5,
+                            color: const Color(0xFF78746D),
+                          ),
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        _obscureText ? Icons.visibility : Icons.visibility_off,
+                        color: const Color(0xFF78746D),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _obscureText = !_obscureText;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+            Align(
+              alignment: Alignment.bottomCenter,
+              // Adjust alignment as needed
+              child: ElevatedButton(
+                onPressed: () async {
+                  // Call the login function and await its result
+                  int result = await registerLearner(nameController.text,genderController.text,
+                      int.parse(ageController.text), phoneController.text,
+                      passwordController.text, proficiencyLevelController.text);
+                  // Handle the result if needed
+                  // For example, you can check the result and show a toast message accordingly
+                  if (result == 1) {
+                    Fluttertoast.showToast(msg: 'Successfully Registered');
+                    print('BOLEHHHHHHHHHHH');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>  LoginLearnerScreen(),
+                        ));
+                  } else {
+                    // Login failed
+                    // Show an error message
+                    Fluttertoast.showToast(msg: 'Registration failed');
+                  }
+                },
+
+                child: Container(
+                  width: 100,
+                  height: 50,
+                  padding: EdgeInsets.fromLTRB(10, 10, 0, 19),
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Register',
+                    style: GoogleFonts.getFont(
+                      'Rubik',
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      height: 1.1,
+                      color: Colors.teal,
+                    ),
+                  ),
+                ),
+              ),
             ),
 
-
-          ],
-        ),
-
-      ),
-    );
-
-
-
+            Align(
+              alignment: Alignment.bottomCenter,
+              // Adjust alignment as needed
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginLearnerScreen(),
+                    ),
+                  );
+                },
+                child: Container(
+                  height: 50,
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Log in',
+                    style: GoogleFonts.getFont(
+                      'Rubik',
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                      height: 1.1,
+                      color: Colors.orangeAccent,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ]),
+    )));
   }
 }
-
-
 
 class SuccessRegisterScreen extends StatefulWidget {
   const SuccessRegisterScreen({super.key});
@@ -371,11 +401,11 @@ class _SuccessRegisterState extends State<SuccessRegisterScreen> {
                   ),
                   Row(
                     children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(top: 100, left: 90.0),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 100, left: 90.0),
                         child: SizedBox(width: 10),
                       ),
-                      Text(
+                      const Text(
                         "Congratulations!",
                         style: TextStyle(
                           color: Colors.green,
@@ -388,11 +418,13 @@ class _SuccessRegisterState extends State<SuccessRegisterScreen> {
                   ),
                   Row(
                     children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(left: 40,),
+                      const Padding(
+                        padding: EdgeInsets.only(
+                          left: 40,
+                        ),
                         child: SizedBox(width: 10),
                       ),
-                      Text(
+                      const Text(
                         "You Have Successfully Registered",
                         style: TextStyle(
                           color: Colors.grey,
@@ -416,71 +448,54 @@ class _SuccessRegisterState extends State<SuccessRegisterScreen> {
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => LoginLearnerScreen(),));
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => LoginLearnerScreen()),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20), // Adjust the radius as needed
+                        borderRadius: BorderRadius.circular(
+                            20), // Adjust the radius as needed
                       ),
-                      backgroundColor: Color(hexColor('#024362')), // Set your preferred background color
+                      backgroundColor: Color(hexColor(
+                          '#024362')), // Set your preferred background color
                     ),
-                    child: Text('Proceed to Login',
-                      style:TextStyle(
+                    child: const Text(
+                      'Proceed to Login',
+                      style: TextStyle(
                         color: Colors.white,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w700,
-                        fontSize: 15,                  ),
+                        fontSize: 15,
+                      ),
                     ),
                   ),
                 ),
               ],
             ),
           ),
-
         ],
       ),
     );
   }
 }
 
-
-
-
-
-
-
-OutlineInputBorder loginInputBorder(){
-  return OutlineInputBorder(
+OutlineInputBorder loginInputBorder() {
+  return const OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(20)),
-    borderSide: BorderSide(color: Colors.grey, width:3,),
-
+    borderSide: BorderSide(color: Colors.grey, width: 3),
   );
 }
 
-
-/*
-  when user click the specific textfield,
-  the colour of the border will change
- */
-OutlineInputBorder loginFocusedBorder()
-{
-  return OutlineInputBorder(
-      borderRadius: BorderRadius.all(
-          Radius.circular(20)),
-      borderSide: BorderSide(color:Colors.red, width: 3)
+OutlineInputBorder loginFocusedBorder() {
+  return const OutlineInputBorder(
+    borderRadius: BorderRadius.all(Radius.circular(20)),
+    borderSide: BorderSide(color: Colors.red, width: 3),
   );
 }
 
-// int hexColor(String color)
-// {
-//   String newColor = '0xff' + color;
-//   newColow =
-// }
-
-int hexColor(String color)
-{
-  String newColor = '0xff' + color;
-  newColor= newColor.replaceAll('#', '');
-  int finalColor = int.parse(newColor);
-  return finalColor;
+int hexColor(String color) {
+  String newColor = '0xff' + color.replaceAll('#', '');
+  return int.parse(newColor);
 }

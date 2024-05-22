@@ -1,8 +1,9 @@
-import 'package:e_quranclinic/View/authentication/login_tutor.dart';
 import 'package:flutter/material.dart';
-import 'package:e_quranclinic/View/authentication/login_learner.dart'; // Import Login.dart
-import 'dart:async';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:e_quranclinic/View/authentication/login_learner.dart';
+import 'package:e_quranclinic/View/authentication/login_tutor.dart';
+
+import '../authentication/register_learner.dart';
 
 class SplashScreen3 extends StatefulWidget {
   @override
@@ -44,7 +45,7 @@ class _SplashScreen3State extends State<SplashScreen3> {
                         image: DecorationImage(
                           fit: BoxFit.contain,
                           image: AssetImage(
-                            'assets/img/splashscreen2.png',
+                            'assets/img/splashscreen3.png',
                           ),
                         ),
                       ),
@@ -108,9 +109,10 @@ class _SplashScreen3State extends State<SplashScreen3> {
                         ),
                         onPressed: () {
                           Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                              builder: (context) => LoginLearnerScreen()),
-                        );},
+                            MaterialPageRoute(
+                                builder: (context) => LoginLearnerScreen()),
+                          );
+                        },
                         child: Text(
                           'I am a learner',
                           textAlign: TextAlign.center,
@@ -137,13 +139,21 @@ class _SplashScreen3State extends State<SplashScreen3> {
                               color: Color(0xFF78746D),
                             ),
                           ),
-                          Text(
-                            'Register now!',
-                            style: GoogleFonts.getFont(
-                              'Rubik',
-                              fontWeight: FontWeight.w400,
-                              fontSize: 14,
-                              color: Color(0xFFE3562A),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => RegisterLearnerScreen()),
+                              );
+                            },
+                            child: Text(
+                              'Register now!',
+                              style: GoogleFonts.getFont(
+                                'Rubik',
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14,
+                                color: Color(0xFFE3562A),
+                              ),
                             ),
                           ),
                         ],
