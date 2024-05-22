@@ -44,7 +44,7 @@ class _SplashScreen3State extends State<SplashScreen3> {
                         image: DecorationImage(
                           fit: BoxFit.contain,
                           image: AssetImage(
-                            'assets/img/splashscreen3.png',
+                            'assets/img/splashscreen2.png',
                           ),
                         ),
                       ),

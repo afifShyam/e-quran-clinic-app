@@ -1,4 +1,4 @@
-import 'package:e_quranclinic/Repo/Authentication/login_tutor.dart';
+import 'package:e_quranclinic/Repo/Authentication/tutor_repo.dart';
 import 'package:e_quranclinic/View/mainview/homepage_tutor.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../../Controller/request_controller.dart';
-import '../../Repo/Authentication/login_learner.dart';
+import '../../Repo/Authentication/learner_repo.dart';
 import '../widget/custom_colour.dart';
 import '../mainview/homepage_learner.dart';
 

@@ -41,6 +41,54 @@ import '../Request/requestAPI.dart';
     }
   }
 
+
+Future<int> registerLearner(String name, String gender, int age, String phone_num,
+    String password, String proficiencyLevel,
+    ) async{
+  var pref = await SharedPreferences.getInstance();
+  try{
+
+    var url = Uri.parse(requestAPI.RegisterURL);
+
+    var body = json.encode({
+      "name": name,
+      "gender": gender,
+      "age": age,
+      "phone_num": phone_num,
+      "password": password,
+      "proficiency_level": proficiencyLevel,
+    });
+
+    print(body.toString());
+    var response = await http.post(url,
+        headers: {"Content-Type": "application/json"},
+        body: body
+    );
+
+    if (response.statusCode == 200){
+      String data =  response.body;
+      pref.setString("token", data);
+      return 0;
+    }
+    else {
+      String data =  response.body;
+      if(data[0] == 'U'){
+        // username duplicated
+        return 1;
+      } else if (data[0] == 'E') {
+        // email duplicated
+        return 2;
+      }
+    }
+    return 3;
+
+  } catch (e) {
+    print('error in register');
+    print(e.toString());
+    return 3;
+  }
+}
+
   Future<bool> refreshToken() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     try {
