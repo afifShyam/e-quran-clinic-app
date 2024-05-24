@@ -1,3 +1,4 @@
+import 'package:e_quranclinic/View/authentication/register_tutor.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:e_quranclinic/View/authentication/login_learner.dart';
@@ -57,7 +58,7 @@ class _SplashScreen3State extends State<SplashScreen3> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            'Lets start learning!',
+                            'Let\'s start learning!',
                             style: GoogleFonts.getFont(
                               'Rubik',
                               fontWeight: FontWeight.w500,
@@ -140,12 +141,48 @@ class _SplashScreen3State extends State<SplashScreen3> {
                             ),
                           ),
                           GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (context) => RegisterLearnerScreen()),
-                              );
-                            },
+                            onTap: () => showDialog<String>(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                backgroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                                title: const Text(
+                                  'Please select your role',
+                                  style: TextStyle(color: Colors.black),
+                                ),
+
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                            builder: (context) => RegisterTutorScreen()),
+                                      );
+                                    },
+                                    child: const Text(
+                                      'Tutor',
+                                      style: TextStyle(color: Colors.orange),
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                            builder: (context) => RegisterLearnerScreen()),
+                                      );
+                                    },
+                                    child: const Text(
+                                      'Learner',
+                                      style: TextStyle(color: Colors.orange),
+                                    ),
+                                  ),
+                                ],
+                                elevation: 24.0,
+                                shadowColor: Colors.orange.withOpacity(0.5),
+                              ),
+                            ),
                             child: Text(
                               'Register now!',
                               style: GoogleFonts.getFont(

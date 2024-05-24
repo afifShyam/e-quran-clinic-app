@@ -1,4 +1,5 @@
 import 'package:e_quranclinic/View/authentication/register_learner.dart';
+import 'package:e_quranclinic/View/authentication/register_tutor.dart';
 import 'package:e_quranclinic/View/mainview/homepage_learner.dart';
 import 'package:flutter/material.dart';
 import 'View/authentication/login_learner.dart';
@@ -26,8 +27,8 @@ class MyApp extends StatelessWidget {
 
 
       ),
-      //home: SplashScreen(),
-      home: RegisterLearnerScreen(),
+      home: SplashScreen(),
+     // home: RegisterTutorScreen(),
       //home: HomePage(phone: '', name: '', id: 0,),
 
     );

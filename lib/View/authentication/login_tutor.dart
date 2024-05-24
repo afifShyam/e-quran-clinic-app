@@ -1,12 +1,14 @@
 import 'package:e_quranclinic/Repo/Authentication/tutor_repo.dart';
 import 'package:e_quranclinic/View/mainview/homepage_tutor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../../Controller/request_controller.dart';
 import '../../Repo/Authentication/learner_repo.dart';
+import '../mainview/splash_screen3.dart';
 import '../widget/custom_colour.dart';
 import '../mainview/homepage_learner.dart';
 
@@ -42,6 +44,27 @@ class _LoginTutorScreenState extends State<LoginTutorScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Container(
+                  margin: const EdgeInsets.fromLTRB(10, 50, 0, 0),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SplashScreen3()),
+                        );
+                      },
+                      child: Container(
+                        width: 30,
+                        height: 30,
+                        child: SvgPicture.asset(
+                          'assets/vectors/back_icon.svg',
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                 Image.asset(
                   "assets/img/logo.png",
                   width: 480,
@@ -120,10 +143,14 @@ class _LoginTutorScreenState extends State<LoginTutorScreen> {
                             MaterialPageRoute(
                               builder: (context) =>  HomePageTutor(),
                             ));
+                      } else if (result == 3){
+                        // Login failed
+                        // Show an error message
+                        Fluttertoast.showToast(msg: 'Account has not been activated yet. Please contact administrator');
                       } else {
                         // Login failed
                         // Show an error message
-                        Fluttertoast.showToast(msg: 'Login failed');
+                        Fluttertoast.showToast(msg: 'Invalid phone number / password');
                       }
                     },
                     child: Text(

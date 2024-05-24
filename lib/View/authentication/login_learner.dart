@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../../Controller/request_controller.dart';
 import '../../Repo/Authentication/learner_repo.dart';
+import '../mainview/splash_screen3.dart';
 import '../widget/custom_colour.dart';
 import '../mainview/homepage_learner.dart';
 
@@ -35,15 +37,37 @@ class _LoginLearnerScreenState extends State<LoginLearnerScreen> {
       },
       child: Scaffold(
         body: SingleChildScrollView(
+
           child: Padding(
             padding: const EdgeInsets.only(top: 5.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Container(
+                  margin: const EdgeInsets.fromLTRB(10, 50, 0, 0),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SplashScreen3()),
+                        );
+                      },
+                      child: Container(
+                        width: 30,
+                        height: 30,
+                        child: SvgPicture.asset(
+                          'assets/vectors/back_icon.svg',
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                 Image.asset(
                   "assets/img/logo.png",
                   width: 480,
-                  height: 390,
+                  height: 300,
                 ),
                 const SizedBox(height: 5), // Adjust the space between the image and text
                 const Text(

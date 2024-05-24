@@ -5,6 +5,7 @@ class requestAPI {
   // Authentication
   static String get loginURL => "${ipaddress}loginLearner";
   static String get RegisterURL => "${ipaddress}registerLearner";
+  static String get RegisterTutorURL => "${ipaddress}registerTutor";
   static String get loginURLTutor => "${ipaddress}loginTutor";
 
   //Token

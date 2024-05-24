@@ -13,6 +13,8 @@ class Tutor {
   int? age;
   String? gender;
   String? document;
+  String? status;
+  int? adminID;
 
 
   Tutor({
@@ -26,6 +28,8 @@ class Tutor {
     this.age,
     this.gender,
     this.document,
+    this.status,
+    this.adminID
   });
 
   factory Tutor.fromJson(Map<String, dynamic> json) {
@@ -40,6 +44,8 @@ class Tutor {
       age: json['age'] as int?, // Parse as int
       gender: json['gender'] as String?,
       document: json['document'] as String?,
+      status: json['status'] as String?,
+      adminID: json['admin_id'] as int?,
     );
   }
 
@@ -55,6 +61,8 @@ class Tutor {
       'age': age,
       'gender': gender,
       'document': document,
+      'status': status,
+      'admin_id': adminID,
     };
   }
 }
