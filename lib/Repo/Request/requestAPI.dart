@@ -12,4 +12,7 @@ class requestAPI {
   static String get refreshURL => "${ipaddress}refreshToken";
   static String get refreshURLTutor => "${ipaddress}refreshTokenTutor";
 
+  //Tutoring Session Management
+  static String get availableSlot => "${ipaddress}available-slot";
+  static String get createSlot => "${ipaddress}create-slot";
 }

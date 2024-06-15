@@ -33,7 +33,7 @@ class _HomePageLearnerState extends State<HomePageLearner> {
         appBar: CustomAppBar(
         height: 200, // Set your desired height here
         titleImage: 'assets/img/banner.png', // Set your image path here
-        backgroundColor: Colors.teal[100]!, // Set the background color to Colors.teal[100]
+        backgroundColor: Colors.teal[100]!, borderRadius: 10.0, // Set the background color to Colors.teal[100]
 
     ),
       body: SingleChildScrollView(
@@ -51,6 +51,10 @@ class _HomePageLearnerState extends State<HomePageLearner> {
                       fontWeight: FontWeight.bold,
                       textStyle: const TextStyle(fontSize: 22, color: Colors.black),
                     ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: const Text('Register Class'),
                   ),
                 ],
               ),

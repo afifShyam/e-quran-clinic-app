@@ -101,7 +101,7 @@ class _SplashScreen2State extends State<SplashScreen2> {
                                         ),
                                       ),
                                       Text(
-                                        'Quarantine is the perfect time to spend your day learning something new, from anywhere!',
+                                        'And He found you lost and guided [you], (Quran 93:7)',
                                         textAlign: TextAlign.center,
                                         style: GoogleFonts.getFont(
                                           'Rubik',
