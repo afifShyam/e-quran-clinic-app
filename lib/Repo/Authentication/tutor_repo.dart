@@ -26,14 +26,16 @@ Future<int> loginTutor(String phone_num, String password) async {
       if (responseData != null) {
         print ({'Response data---$responseData'});
         String token = responseData['token'] ?? '';
-        String phone = responseData['phone_num'] ?? '';
-        String email = responseData['email'] ?? '';
-        String password = responseData['password'] ?? '';
-        String profile_picture = responseData['profile_picture'] ?? '';
-        int age = responseData['age'] ?? 0;
-        String gender = responseData['gender'] ?? '';xsr5555555555
-        String status = responseData['status'] ?? '';
+        String phone = responseData['tutor']['phone_num'] ?? '';
+        String email = responseData['tutor']['email'] ?? '';
+        String password = responseData['tutor']['password'] ?? '';
+        String profilePicture = responseData['tutor']['profile_picture'] ?? '';
+        int age = responseData['tutor']['age'] ?? 0;
+        String gender = responseData['tutor']['gender'] ?? '';
+        String status = responseData['tutor']['status'] ?? '';
         String name = responseData['tutor']['name'] ?? '';
+        int tutorID = responseData['tutor']['id'] ?? 0;
+        print('Tutor ID: $tutorID');
 
         // Store the data using shared preferences
         await pref.setString("token", token);
@@ -41,10 +43,11 @@ Future<int> loginTutor(String phone_num, String password) async {
         await pref.setString("phone_num", phone);
         await pref.setString("email", email);
         await pref.setString("password", password);
-        await pref.setString("profile_picture", profile_picture);
+        await pref.setString("profile_picture", profilePicture);
         await pref.setInt("age", age);
         await pref.setString("gender", gender);
         await pref.setString("status", status);
+        await pref.setInt("id", tutorID);
 
         print('TUTOR NAME : $name');
         print('TOKEN : $token');

@@ -15,4 +15,5 @@ class requestAPI {
   //Tutoring Session Management
   static String get availableSlot => "${ipaddress}available-slot";
   static String get createSlot => "${ipaddress}create-slot";
+  static String get createMultipleSlots => "${ipaddress}create-multiple-slot";
 }

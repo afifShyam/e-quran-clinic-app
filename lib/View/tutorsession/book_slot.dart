@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../Repo/tutoringSession/slot_repo.dart';
+
 class BookSlot extends StatefulWidget {
   final DateTime selectedDate;
 
@@ -30,6 +32,9 @@ class _BookSlotState extends State<BookSlot> {
       timeSlots.add(startTime);
       startTime = startTime.add(Duration(minutes: 30));
     }
+
+    // Initialize selectedSlots with false values
+    selectedSlots = List.generate(timeSlots.length, (index) => false);
   }
 
   Future<void> loadSelectedSlots() async {
@@ -51,12 +56,22 @@ class _BookSlotState extends State<BookSlot> {
     }
   }
 
+  Future<void> bookSelectedSlotsWrapper() async {
+    await bookSelectedSlots(selectedSlots, timeSlots, context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.teal[50],
       appBar: AppBar(
         title: Text("Book Slot for ${widget.selectedDate.toLocal().toString().split(' ')[0]}"), // Display only the date part
+        actions: [
+          IconButton(
+            icon: Icon(Icons.save),
+            onPressed: bookSelectedSlotsWrapper, // Book selected slots when the save icon is pressed
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
