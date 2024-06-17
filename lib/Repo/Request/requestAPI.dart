@@ -1,6 +1,6 @@
 class requestAPI {
 
-  static const String ipaddress = "http://192.168.0.106:8000/";
+  static const String ipaddress = "http://192.168.1.155:8000/";
 
   // Authentication
   static String get loginURL => "${ipaddress}loginLearner";
@@ -16,4 +16,7 @@ class requestAPI {
   static String get availableSlot => "${ipaddress}available-slot";
   static String get createSlot => "${ipaddress}create-slot";
   static String get createMultipleSlots => "${ipaddress}create-multiple-slot";
+
+  static String get viewVerifiedTutors => "${ipaddress}tutors/verified";
+  static String get viewProfileTutor => "${ipaddress}tutor/{id}";
 }

@@ -125,6 +125,38 @@ Future<int> registerTutor(
   }
 }
 
+Future<List> fetchTutors() async {
+  try {
+    // Debug: print the URL
+    var url = Uri.parse(requestAPI.viewVerifiedTutors);
+    print('Fetching tutors from $url');
+
+    final response = await http.get(url);
+    print('Response status: ${response.statusCode}'); // Debug: print the response status code
+
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      print('Response data: $data'); // Debug: print the response data
+      return data['tutors']; // Ensure this key matches your JSON response
+    } else {
+      print('Failed to load tutors: ${response.statusCode}');
+      print('Response body: ${response.body}'); // Debug: print the response body
+      return [];
+    }
+  } catch (e) {
+    print('Error fetching tutors: $e');
+    return [];
+  }
+}
+Future<Map<String, dynamic>> fetchTutor(int id) async {
+  final response = await http.get(Uri.parse(requestAPI.viewProfileTutor));
+  if (response.statusCode == 200) {
+    return json.decode(response.body);
+  } else {
+    throw Exception('Failed to load tutor data');
+  }
+}
+
 Future<bool> refreshTokenTutor() async {
   SharedPreferences pref = await SharedPreferences.getInstance();
   try {

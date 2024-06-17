@@ -2,6 +2,7 @@ import 'package:e_quranclinic/View/widget/bottom_navigationbar_tutor.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../main.dart';
+import '../widget/custom_appbar.dart';
 import '../widget/default_appbar.dart';
 import 'book_slot.dart';
 
@@ -28,9 +29,8 @@ class _ViewSlotState extends State<ViewSlot> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.teal[50],
-      appBar: AppBarWidget(),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.only(top: 100.0, right: 10, left: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -41,35 +41,38 @@ class _ViewSlotState extends State<ViewSlot> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            TableCalendar(
-              firstDay: DateTime(2020),
-              lastDay: DateTime(2030),
-              focusedDay: _focusedDay,
-              calendarFormat: _calendarFormat,
-              selectedDayPredicate: (day) {
-                return isSameDay(_selectedDate, day);
-              },
-              onDaySelected: (selectedDate, focusedDay) {
-                setState(() {
-                  _selectedDate = selectedDate;
-                  _focusedDay = focusedDay;
-                });
-                // Navigate to BookSlot page or show a dialog to book the slot
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => BookSlot(selectedDate: _selectedDate!)),
-                );
-              },
-              onFormatChanged: (format) {
-                if (_calendarFormat != format) {
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TableCalendar(
+                firstDay: DateTime(2020),
+                lastDay: DateTime(2030),
+                focusedDay: _focusedDay,
+                calendarFormat: _calendarFormat,
+                selectedDayPredicate: (day) {
+                  return isSameDay(_selectedDate, day);
+                },
+                onDaySelected: (selectedDate, focusedDay) {
                   setState(() {
-                    _calendarFormat = format;
+                    _selectedDate = selectedDate;
+                    _focusedDay = focusedDay;
                   });
-                }
-              },
-              onPageChanged: (focusedDay) {
-                _focusedDay = focusedDay;
-              },
+                  // Navigate to BookSlot page or show a dialog to book the slot
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => BookSlot(selectedDate: _selectedDate!)),
+                  );
+                },
+                onFormatChanged: (format) {
+                  if (_calendarFormat != format) {
+                    setState(() {
+                      _calendarFormat = format;
+                    });
+                  }
+                },
+                onPageChanged: (focusedDay) {
+                  _focusedDay = focusedDay;
+                },
+              ),
             ),
           ],
         ),

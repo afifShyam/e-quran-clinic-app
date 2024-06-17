@@ -1,3 +1,4 @@
+import 'package:e_quranclinic/View/tutorsession/view_tutor.dart';
 import 'package:e_quranclinic/View/widget/custom_appbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -30,12 +31,12 @@ class _HomePageLearnerState extends State<HomePageLearner> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(
+      appBar: CustomAppBar(
         height: 200, // Set your desired height here
         titleImage: 'assets/img/banner.png', // Set your image path here
-        backgroundColor: Colors.teal[100]!, borderRadius: 10.0, // Set the background color to Colors.teal[100]
+        backgroundColor: Colors.teal[100]!, borderRadius: 50.0, // Set the background color to Colors.teal[100]
 
-    ),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -46,18 +47,15 @@ class _HomePageLearnerState extends State<HomePageLearner> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                        "Upcoming Class",
+                    "Upcoming Class",
                     style: GoogleFonts.roboto(
                       fontWeight: FontWeight.bold,
                       textStyle: const TextStyle(fontSize: 22, color: Colors.black),
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Text('Register Class'),
-                  ),
                 ],
               ),
+
               SizedBox(height: 16.0),
               Center(
                 child: Container(
@@ -88,6 +86,31 @@ class _HomePageLearnerState extends State<HomePageLearner> {
                         ),
                       ),
                     ],
+                  ),
+                ),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFFE3562A),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 19),
+                  minimumSize: Size(167, 0),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => ViewVerifiedTutor(),
+                      ));
+                },
+                child: Text(
+                  'Book Slot',
+                  style: GoogleFonts.getFont(
+                    'Rubik',
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    color: Colors.white,
                   ),
                 ),
               ),

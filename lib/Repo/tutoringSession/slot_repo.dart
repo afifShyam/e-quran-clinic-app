@@ -95,3 +95,5 @@ Future<List<dynamic>> fetchSlots() async {
     throw Exception('Failed to load slots');
   }
 }
+
+

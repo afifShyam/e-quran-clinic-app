@@ -1,21 +1,37 @@
+import 'package:e_quranclinic/View/tutorsession/tutoring_progress_card.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../Repo/Authentication/tutor_repo.dart';
+import 'tutor_card.dart';
+import 'profile_tutor.dart';
 
-void main() {
-  runApp(MyApp());
+class ViewVerifiedTutor extends StatefulWidget {
+  @override
+  _ViewVerifiedTutorState createState() => _ViewVerifiedTutorState();
 }
 
-class MyApp extends StatelessWidget {
+class _ViewVerifiedTutorState extends State<ViewVerifiedTutor> {
+  List tutors = [];
+
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: MyHomePage(),
-      ),
+  void initState() {
+    super.initState();
+    fetchTutors().then((data) {
+      setState(() {
+        tutors = data;
+      });
+    });
+  }
+
+  Future<void> _selectTutor(Map<String, dynamic> tutor) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('selectedTutorId', tutor['id']);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ProfileTutorPage(tutorId: tutor['id'])),
     );
   }
-}
 
-class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +39,7 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.teal[200],
         elevation: 0,
-        leading:  IconButton(
+        leading: IconButton(
           icon: Image.asset('assets/img/logo.png'),
           onPressed: () {},
         ),
@@ -51,14 +67,16 @@ class MyHomePage extends StatelessWidget {
             SizedBox(height: 10),
             Container(
               height: 120,
-              child: ListView(
+              child: tutors.isEmpty
+                  ? Center(child: CircularProgressIndicator())
+                  : ListView(
                 scrollDirection: Axis.horizontal,
-                children: [
-                  TutorCard(),
-                  TutorCard(),
-                  TutorCard(),
-                  TutorCard(),
-                ],
+                children: tutors.map((tutor) {
+                  return TutorCard(
+                    tutor: tutor,
+                    onSelect: () => _selectTutor(tutor),
+                  );
+                }).toList(),
               ),
             ),
             SizedBox(height: 20),
@@ -102,14 +120,16 @@ class MyHomePage extends StatelessWidget {
             SizedBox(height: 10),
             Container(
               height: 120,
-              child: ListView(
+              child: tutors.isEmpty
+                  ? Center(child: CircularProgressIndicator())
+                  : ListView(
                 scrollDirection: Axis.horizontal,
-                children: [
-                  TutorCard(),
-                  TutorCard(),
-                  TutorCard(),
-                  TutorCard(),
-                ],
+                children: tutors.map((tutor) {
+                  return TutorCard(
+                    tutor: tutor,
+                    onSelect: () => _selectTutor(tutor),
+                  );
+                }).toList(),
               ),
             ),
           ],
@@ -130,77 +150,6 @@ class MyHomePage extends StatelessWidget {
             label: 'Profile',
           ),
         ],
-      ),
-    );
-  }
-}
-
-class TutorCard extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.symmetric(horizontal: 8),
-      child: Container(
-        width: 100,
-        height: 100,
-        padding: EdgeInsets.all(8),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.person, size: 40),
-            Text("Full name"),
-            Text("email"),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class TutoringProgressCard extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Dismissible(
-      key: UniqueKey(),
-      direction: DismissDirection.endToStart,
-      onDismissed: (direction) {
-        // Perform the action you want when the card is dismissed
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Card dismissed')),
-        );
-      },
-      background: Container(
-        alignment: Alignment.centerRight,
-        padding: EdgeInsets.symmetric(horizontal: 20.0),
-        color: Colors.red,
-        child: Icon(
-          Icons.delete,
-          color: Colors.white,
-        ),
-      ),
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Juz 1",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 5),
-              Text("Ustazah Asma"),
-              SizedBox(height: 5),
-              Text("15/5/2024 08:00 - 09:00 AM"),
-              SizedBox(height: 5),
-              Text("Comments"),
-              SizedBox(height: 5),
-              LinearProgressIndicator(
-                value: 0.9, // example progress value
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }
