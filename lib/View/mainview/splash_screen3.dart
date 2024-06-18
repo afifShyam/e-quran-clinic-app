@@ -152,13 +152,13 @@ class _SplashScreen3State extends State<SplashScreen3> {
                                   'Please select your role',
                                   style: TextStyle(color: Colors.black),
                                 ),
-
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () {
                                       Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(
-                                            builder: (context) => RegisterTutorScreen()),
+                                            builder: (context) =>
+                                                RegisterTutorScreen()),
                                       );
                                     },
                                     child: const Text(
@@ -170,7 +170,8 @@ class _SplashScreen3State extends State<SplashScreen3> {
                                     onPressed: () {
                                       Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(
-                                            builder: (context) => RegisterLearnerScreen()),
+                                            builder: (context) =>
+                                                RegisterLearnerScreen()),
                                       );
                                     },
                                     child: const Text(
@@ -207,8 +208,8 @@ class _SplashScreen3State extends State<SplashScreen3> {
   }
 }
 
-void main() {
-  runApp(MaterialApp(
-    home: SplashScreen3(),
-  ));
-}
+// void main() {
+//   runApp(MaterialApp(
+//     home: SplashScreen3(),
+//   ));
+// }

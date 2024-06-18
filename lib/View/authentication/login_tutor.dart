@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:e_quranclinic/View/authentication/register_tutor.dart';
 import 'package:e_quranclinic/View/mainview/splash_screen3.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +17,6 @@ import '../mainview/homepage_learner.dart';
 import '../mainview/homepage_tutor.dart';
 import '../widget/custom_appbar.dart';
 
-
 class LoginTutorScreen extends StatefulWidget {
   const LoginTutorScreen({Key? key}) : super(key: key);
 
@@ -30,12 +31,11 @@ class _LoginTutorScreenState extends State<LoginTutorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        return false;
-      },
+    return PopScope(
+      canPop: false,
       child: Scaffold(
-        body: BackgroundContainer( // Use BackgroundContainer here
+        body: BackgroundContainer(
+          // Use BackgroundContainer here
           child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.only(top: 5.0),
@@ -50,7 +50,8 @@ class _LoginTutorScreenState extends State<LoginTutorScreen> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => SplashScreen3()),
+                            MaterialPageRoute(
+                                builder: (context) => SplashScreen3()),
                           );
                         },
                         child: Container(
@@ -79,14 +80,15 @@ class _LoginTutorScreenState extends State<LoginTutorScreen> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(right:30.0, left: 30.0, bottom: 10, top: 10.0),
+                    padding: const EdgeInsets.only(
+                        right: 30.0, left: 30.0, bottom: 10, top: 10.0),
                     child: Column(
                       children: [
                         TextField(
                           controller: phoneController,
                           decoration: InputDecoration(
                             labelText: 'Phone Number',
-                            prefixIcon: Icon(Icons.phone),
+                            prefixIcon: const Icon(Icons.phone),
                             border: loginInputBorder(),
                             enabledBorder: loginInputBorder(),
                             focusedBorder: loginFocusedBorder(),
@@ -97,14 +99,15 @@ class _LoginTutorScreenState extends State<LoginTutorScreen> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(right:30.0, left: 30.0, bottom: 20, top: 5.0),
+                    padding: const EdgeInsets.only(
+                        right: 30.0, left: 30.0, bottom: 20, top: 5.0),
                     child: Column(
                       children: [
                         TextField(
                           controller: passwordController,
                           decoration: InputDecoration(
                             labelText: 'Password',
-                            prefixIcon: Icon(Icons.lock),
+                            prefixIcon: const Icon(Icons.lock),
                             suffixIcon: GestureDetector(
                               onTap: () {
                                 setState(() {
@@ -112,7 +115,9 @@ class _LoginTutorScreenState extends State<LoginTutorScreen> {
                                 });
                               },
                               child: Icon(
-                                !_obscureText ? Icons.visibility : Icons.visibility_off,
+                                !_obscureText
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
                               ),
                             ),
                             border: loginInputBorder(),
@@ -129,20 +134,28 @@ class _LoginTutorScreenState extends State<LoginTutorScreen> {
                     height: 40,
                     child: ElevatedButton(
                       onPressed: () async {
-                        int result = await loginTutor(phoneController.text, passwordController.text);
+                        int result = await loginTutor(
+                            phoneController.text, passwordController.text);
                         if (result == 1) {
-                          print('BOLEHHHHHHHHHHH');
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => HomePageTutor()),
-                          );
+                          log('BOLEHHHHHHHHHHH');
+                          if (context.mounted) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const NavigationManager()),
+                            );
+                          }
                         } else if (result == 3) {
-                          Fluttertoast.showToast(msg: 'Account has not been activated yet. Please contact administrator');
+                          Fluttertoast.showToast(
+                              msg:
+                                  'Account has not been activated yet. Please contact administrator');
                         } else {
-                          Fluttertoast.showToast(msg: 'Invalid phone number / password');
+                          Fluttertoast.showToast(
+                              msg: 'Invalid phone number / password');
                         }
                       },
-                      child: Text(
+                      child: const Text(
                         'Login',
                         style: TextStyle(
                           color: TColor.primaryColor2,
@@ -158,7 +171,7 @@ class _LoginTutorScreenState extends State<LoginTutorScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text(
+                        const Text(
                           "Don't have account yet? ",
                           style: TextStyle(
                             color: Colors.grey,
@@ -166,15 +179,17 @@ class _LoginTutorScreenState extends State<LoginTutorScreen> {
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-
                         GestureDetector(
                           onTap: () {
                             setState(() {
-                              Navigator.push(context, MaterialPageRoute(builder:
-                                  (context) => RegisterTutorScreen())); //go to register screen
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const RegisterTutorScreen())); //go to register screen
                             });
                           },
-                          child: Text(
+                          child: const Text(
                             'Register Now',
                             style: TextStyle(
                               color: TColor.primaryColor2,
@@ -186,7 +201,6 @@ class _LoginTutorScreenState extends State<LoginTutorScreen> {
                       ],
                     ),
                   ),
-
                 ],
               ),
             ),
@@ -198,14 +212,14 @@ class _LoginTutorScreenState extends State<LoginTutorScreen> {
 }
 
 OutlineInputBorder loginInputBorder() {
-  return OutlineInputBorder(
+  return const OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(20)),
     borderSide: BorderSide(color: Colors.grey, width: 3),
   );
 }
 
 OutlineInputBorder loginFocusedBorder() {
-  return OutlineInputBorder(
+  return const OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(20)),
     borderSide: BorderSide(color: TColor.secondaryColor2, width: 3),
   );
