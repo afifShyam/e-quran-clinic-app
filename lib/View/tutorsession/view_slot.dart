@@ -6,9 +6,6 @@ import '../widget/custom_appbar.dart';
 import '../widget/default_appbar.dart';
 import 'book_slot.dart';
 
-void main() {
-  runApp(MyApp());
-}
 
 class ViewSlot extends StatefulWidget {
   @override
@@ -76,8 +73,7 @@ class _ViewSlotState extends State<ViewSlot> {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: TutorNavigationBarWidget(),
-    );
-  }
-}
+      )
+      // bottomNavigationBar: TutorNavigationBarWidget(onItemTapped: (int value) {  },) )
+
+        );}}

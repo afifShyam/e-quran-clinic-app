@@ -28,7 +28,7 @@ class _ViewVerifiedTutorState extends State<ViewVerifiedTutor> {
     await prefs.setInt('selectedTutorId', tutor['id']);
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ProfileTutorPage(tutorId: tutor['id'])),
+      MaterialPageRoute(builder: (context) => ProfileTutorPage()),
     );
   }
 

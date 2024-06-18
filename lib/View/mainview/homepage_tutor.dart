@@ -1,62 +1,63 @@
-import 'package:e_quranclinic/View/widget/custom_appbar.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:e_quranclinic/main.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'dart:ui';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../tutorsession/view_slot.dart';
-import '/main.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import '../widget/bottom_navigationbar_tutor.dart';
+
+Future<String?> getNameFromPrefs() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString('name'); // Assuming the key for the name is 'name'
+}
 
 class HomePageTutor extends StatefulWidget {
-
-
-  HomePageTutor();
 
   @override
   State<HomePageTutor> createState() => _HomePageTutorState();
 }
 
 class _HomePageTutorState extends State<HomePageTutor> {
-  late String phone; // To store the retrieved phone number
-  late String name;
-  late int id;
-
-  @override
-  void initState() {
-    super.initState();
-
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        height: 200, // Set your desired height here
-        titleImage: 'assets/img/banner.png', // Set your image path here
-        backgroundColor: Colors.teal[100]!, borderRadius: 50.0, // Set the background color to Colors.teal[100]
-
-      ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/img/backgroundimage.png"),
+              fit: BoxFit.cover,
+            ),
+          ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    "Upcoming Class",
-                    style: GoogleFonts.roboto(
-                      fontWeight: FontWeight.bold,
-                      textStyle: const TextStyle(fontSize: 22, color: Colors.black),
-                    ),
-                  ),
-                ],
+              SizedBox(height: 50), // Adjust the height as needed
+              Image.asset(
+                'assets/img/banner.png',
+                fit: BoxFit.contain,
+                height: 100,
               ),
-
-              SizedBox(height: 16.0),
+              SizedBox(height: 8.0), // Add space between the image and text
+              FutureBuilder<String?>(
+                future: getNameFromPrefs(), // Fetch the name asynchronously
+                builder: (context, snapshot) {
+                  String name = snapshot.data ?? 'User'; // Default to 'User' if name not found
+                  return Text(
+                    "$name ٱلسَّلَامُ عَلَيْكُمْ، ", // Display the retrieved name
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.playfairDisplay(
+                      textStyle: TextStyle(
+                        fontSize: 23,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              SizedBox(height: 16.0), // Add space below the text
               Center(
                 child: Container(
                   padding: EdgeInsets.all(20.0),
@@ -76,7 +77,6 @@ class _HomePageTutorState extends State<HomePageTutor> {
                           children: [
                             Text(
                               "No upcoming class.",
-
                               style: GoogleFonts.roboto(
                                 fontWeight: FontWeight.bold,
                                 textStyle: const TextStyle(fontSize: 22, color: Colors.black),
@@ -89,6 +89,7 @@ class _HomePageTutorState extends State<HomePageTutor> {
                   ),
                 ),
               ),
+              SizedBox(height: 16.0), // Add space below the text
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFFE3562A),
@@ -101,19 +102,26 @@ class _HomePageTutorState extends State<HomePageTutor> {
                 onPressed: () {
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
-                        builder: (context) => ViewSlot(),
-                  ));
+                      builder: (context) => ViewSlot(),
+                    ),
+                  );
                 },
                 child: Text(
                   'Book Slot',
                   style: GoogleFonts.getFont(
-                    'Rubik',
+                    'Poppins',
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
                     color: Colors.white,
                   ),
                 ),
               ),
+              SizedBox(height: 400.0), // Add space below the button
+             // TutorNavigationBarWidget(
+             //    onItemTapped: (index) {
+             //      // Handle navigation based on the index
+             //    },
+             //  ),
             ],
           ),
         ),

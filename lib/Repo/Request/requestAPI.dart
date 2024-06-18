@@ -1,6 +1,6 @@
 class requestAPI {
 
-  static const String ipaddress = "http://192.168.1.155:8000/";
+  static const String ipaddress = "http://10.131.73.237:8000/";
 
   // Authentication
   static String get loginURL => "${ipaddress}loginLearner";

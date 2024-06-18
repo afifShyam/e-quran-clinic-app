@@ -1,3 +1,4 @@
+import 'package:e_quranclinic/main.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,18 +29,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget> actions;
   final Color startColor;
   final Color endColor;
-  final double borderRadius; // New property for border radius
+  final double bottomBorderRadius; // New property for bottom border radius
 
   const CustomAppBar({
-    Key? key,
-    required this.height,
-    required this.titleImage,
-    this.leading = const SizedBox(),
-    this.actions = const <Widget>[],
-    this.startColor = TColor.primaryColor3,
-    this.endColor = TColor.primaryColor3,
-    required this.borderRadius,
-    required Color backgroundColor, // Initialize border radius
+    Key? key, required this.height, required this.titleImage, required this.leading, required this.actions, required this.startColor, required this.endColor, required this.bottomBorderRadius,
   }) : super(key: key);
 
   @override
@@ -49,29 +42,24 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       builder: (context, snapshot) {
         String name = snapshot.data ?? 'User'; // Default to 'User' if name not found
         return ClipRRect(
-          borderRadius: BorderRadius.circular(borderRadius),
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(bottomBorderRadius),
+            bottomRight: Radius.circular(bottomBorderRadius),
+          ),
           child: Container(
-            height: height,
             child: AppBar(
               leading: leading,
               actions: actions,
               flexibleSpace: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [startColor, endColor],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
                       titleImage,
                       fit: BoxFit.contain,
-                      height: height * 0.6,
+                      height:100,
                     ),
-                    SizedBox(height: 8.0),
+                    SizedBox(height: 50.0),
                     Row(
                       children: [
                         Expanded(
@@ -92,6 +80,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ],
                 ),
               ),
+              elevation: 8, // Add elevation for shadow
             ),
           ),
         );
@@ -102,4 +91,3 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => Size.fromHeight(height);
 }
-

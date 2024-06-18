@@ -19,7 +19,7 @@ class _SplashScreen2State extends State<SplashScreen2> {
     // Check if navigation hasn't happened yet
     if (!_isNavigated) {
       // Start a timer to navigate after 2 seconds
-      Timer(Duration(seconds: 2), () {
+      Timer(Duration(seconds: 5), () {
         // Navigate to Login
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => SplashScreen3()),

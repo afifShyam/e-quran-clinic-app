@@ -24,11 +24,27 @@ Future<int> login(String phone_num, String password) async {
 
     if (response.statusCode == 200) {
       Map<String, dynamic> responseData = json.decode(response.body);
+      print ({'Response data---$responseData'});
       String token = responseData['token'];
+      String phone = responseData['learner']['phone_num'] ?? '';
+      String password = responseData['learner']['password'] ?? '';
+      int age = responseData['learner']['age'] ?? 0;
+      String gender = responseData['learner']['gender'] ?? '';
+      String proficiencyLevel = responseData['learner']['proficiency_level'] ?? '';
+      String name = responseData['learner']['name'] ?? '';
+      int learnerID = responseData['learner']['id'] ?? 0;
+      print('Learner ID: $learnerID');
 
       // Store the token using shared preferences
       await pref.setString("token", token);
-      await pref.setString("phone_num", phone_num);
+      await pref.setString("phone_num", phone);
+      await pref.setString("password", password);
+      await pref.setInt("age", age);
+      await pref.setString("gender", gender);
+      await pref.setString("proficiency_level", proficiencyLevel);
+      await pref.setInt("id", learnerID);
+
+      print('Learner : $name');
       return 1;  // Success
     } else {
       // Handle different status codes
